@@ -2,30 +2,41 @@
 
 namespace Database\Seeders;
 
+use App\Models\Customer;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class CustomerSeeder extends Seeder
 {
     public function run(): void
     {
-        DB::table('customers')->insert([
-            [
-                'customer_code' => 'C001',
-                'name' => 'Juan Dela Cruz',
-                'email' => 'juan@example.com',
-                'phone' => '09171234567',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'customer_code' => 'C002',
-                'name' => 'Maria Santos',
-                'email' => 'maria@example.com',
-                'phone' => '09181234567',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
+        Customer::create([
+            'full_name' => 'Juan Dela Cruz',
+            'email' => 'juan@example.com',
+            'phone' => '09171234567',
+        ]);
+
+        Customer::create([
+            'full_name' => 'Maria Santos',
+            'email' => 'maria@example.com',
+            'phone' => '09181234567',
+        ]);
+
+        Customer::create([
+            'full_name' => 'Pedro Reyes',
+            'email' => 'pedro@example.com',
+            'phone' => '09191234567',
+        ]);
+
+        Customer::create([
+            'full_name' => 'Ana Garcia',
+            'email' => 'ana@example.com',
+            'phone' => '09201234567',
+        ]);
+
+        Customer::create([
+            'full_name' => 'Carlo Mendoza',
+            'email' => 'carlo@example.com',
+            'phone' => '09211234567',
         ]);
     }
 }
