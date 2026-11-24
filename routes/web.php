@@ -1,18 +1,16 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PageController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\PageController;
 use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Route;
 
-Route::get('/', [PageController::class, 'home'])
-    ->name('home');
+Route::get('/', [PageController::class, 'home'])->name('home');
 
-Route::get('/about', [PageController::class, 'about'])
-    ->name('about');
+Route::get('/about', [PageController::class, 'about'])->name('about');
 
-Route::get('/customers', [CustomerController::class, 'index'])
-    ->name('customers');
+Route::resource('customers', CustomerController::class)
+    ->only(['index', 'create', 'store', 'edit', 'update']);
 
-Route::get('/users', [UserController::class, 'index'])
-    ->name('users');
+Route::resource('users', UserController::class)
+    ->only(['index', 'create', 'store', 'edit', 'update']);
