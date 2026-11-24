@@ -1,65 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title') - POS Laravel</title>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            background: #f4f6f8;
-        }
+        <title>{{ config('app.name', 'Laravel') }}</title>
 
-        nav {
-            background: #1f2937;
-            padding: 18px;
-        }
+        <!-- Fonts -->
+        <link rel="preconnect" href="https://fonts.bunny.net">
+        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
-        nav a {
-            color: white;
-            margin-right: 20px;
-            text-decoration: none;
-        }
+        <!-- Scripts -->
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+    </head>
+    <body class="font-sans antialiased">
+        <div class="min-h-screen bg-gray-100">
+            @include('layouts.navigation')
 
-        main {
-            max-width: 1000px;
-            margin: 30px auto;
-            background: white;
-            padding: 25px;
-            border-radius: 8px;
-        }
+            <!-- Page Heading -->
+            @isset($header)
+                <header class="bg-white shadow">
+                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                        {{ $header }}
+                    </div>
+                </header>
+            @endisset
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        th, td {
-            border: 1px solid #ccc;
-            padding: 10px;
-            text-align: left;
-        }
-
-        th {
-            background: #e5e7eb;
-        }
-    </style>
-</head>
-<body>
-
-<nav>
-    <a href="{{ route('home') }}">Home</a>
-    <a href="{{ route('about') }}">About</a>
-    <a href="{{ route('customers.index') }}">Customer Accounts</a>
-    <a href="{{ route('users.index') }}">User Accounts</a>
-</nav>
-
-<main>
-    @yield('content')
-</main>
-
-</body>
+            <!-- Page Content -->
+            <main>
+                @yield('content')
+                {{ $slot ?? '' }}
+            </main>
+        </div>
+    </body>
 </html>
