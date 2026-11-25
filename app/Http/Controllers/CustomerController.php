@@ -25,7 +25,7 @@ class CustomerController extends Controller
         $validated = $request->validate([
             'full_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', 'unique:customers,email'],
-            'phone' => ['required', 'string', 'max:255'],
+            'phone' => ['nullable', 'string', 'max:255'],
         ]);
 
         Customer::create($validated);
@@ -50,7 +50,7 @@ class CustomerController extends Controller
                 'max:255',
                 Rule::unique('customers', 'email')->ignore($customer->id),
             ],
-            'phone' => ['required', 'string', 'max:255'],
+            'phone' => ['nullable', 'string', 'max:255'],
         ]);
 
         $customer->update($validated);
@@ -58,5 +58,14 @@ class CustomerController extends Controller
         return redirect()
             ->route('customers.index')
             ->with('success', 'Customer updated successfully.');
+    }
+
+    public function destroy(Customer $customer)
+    {
+        $customer->delete();
+
+        return redirect()
+            ->route('customers.index')
+            ->with('success', 'Customer deleted successfully.');
     }
 }

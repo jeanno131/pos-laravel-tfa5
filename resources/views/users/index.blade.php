@@ -11,6 +11,8 @@
 
 <a href="{{ route('users.create') }}">Create User</a>
 
+<br><br>
+
 <table>
     <thead>
         <tr>
@@ -23,9 +25,10 @@
     </thead>
 
     <tbody>
-        @foreach ($users as $user)
+        @forelse ($users as $user)
             <tr>
                 <td>{{ $user->id }}</td>
+
                 <td>
                     @if ($user->avatar)
                         <img
@@ -38,15 +41,37 @@
                         No avatar
                     @endif
                 </td>
+
                 <td>{{ $user->username }}</td>
                 <td>{{ $user->full_name }}</td>
+
                 <td>
                     <a href="{{ route('users.edit', $user) }}">
                         Edit
                     </a>
+
+                    <form
+                        method="POST"
+                        action="{{ route('users.destroy', $user) }}"
+                        style="display: inline;"
+                    >
+                        @csrf
+                        @method('DELETE')
+
+                        <button
+                            type="submit"
+                            onclick="return confirm('Delete this user?')"
+                        >
+                            Delete
+                        </button>
+                    </form>
                 </td>
             </tr>
-        @endforeach
+        @empty
+            <tr>
+                <td colspan="5">No users found.</td>
+            </tr>
+        @endforelse
     </tbody>
 </table>
 @endsection

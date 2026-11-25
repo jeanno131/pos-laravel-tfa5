@@ -11,6 +11,8 @@
 
 <a href="{{ route('customers.create') }}">Create Customer</a>
 
+<br><br>
+
 <table>
     <thead>
         <tr>
@@ -18,24 +20,45 @@
             <th>Full Name</th>
             <th>Email</th>
             <th>Phone</th>
-            <th>Action</th>
+            <th>Actions</th>
         </tr>
     </thead>
 
     <tbody>
-        @foreach ($customers as $customer)
+        @forelse ($customers as $customer)
             <tr>
                 <td>{{ $customer->id }}</td>
                 <td>{{ $customer->full_name }}</td>
                 <td>{{ $customer->email }}</td>
-                <td>{{ $customer->phone }}</td>
+                <td>{{ $customer->phone ?: 'No phone provided' }}</td>
+
                 <td>
                     <a href="{{ route('customers.edit', $customer) }}">
                         Edit
                     </a>
+
+                    <form
+                        method="POST"
+                        action="{{ route('customers.destroy', $customer) }}"
+                        style="display: inline;"
+                    >
+                        @csrf
+                        @method('DELETE')
+
+                        <button
+                            type="submit"
+                            onclick="return confirm('Delete this customer?')"
+                        >
+                            Delete
+                        </button>
+                    </form>
                 </td>
             </tr>
-        @endforeach
+        @empty
+            <tr>
+                <td colspan="5">No customers found.</td>
+            </tr>
+        @endforelse
     </tbody>
 </table>
 @endsection

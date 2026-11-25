@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SaleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,10 +27,16 @@ Route::middleware('auth')->group(function () {
         ->name('profile.destroy');
 
     Route::resource('customers', CustomerController::class)
-        ->only(['index', 'create', 'store', 'edit', 'update']);
+        ->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
 
     Route::resource('users', UserController::class)
-        ->only(['index', 'create', 'store', 'edit', 'update']);
+        ->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
+
+    Route::resource('products', ProductController::class)
+        ->except(['show']);
+
+    Route::resource('sales', SaleController::class)
+        ->only(['index', 'create', 'store']);
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
